@@ -5,15 +5,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         {{ encore_entry_link_tags('app') }}
         {% block stylesheets %}{% endblock %}
-        <title>{% block title %}{% endblock %}</title>
+        <title>Picsy &bull; {% block title %}{% endblock %}</title>
     </head>
 
     <body>
-        {% include "includes/header.html.twig" %}
+        {% if app.request.get('_route') != 'home' %}
+            {% include "includes/header.html.twig" %}
+        {% endif %}
         <main>
             {% block body %}{% endblock %}
         </main>
-        {% include "includes/footer.html.twig" %}
+        {% if app.request.get('_route') != 'home' %}
+            {% include "includes/footer.html.twig" %}
+        {% endif %}
 
         {{ encore_entry_script_tags('app') }}
         {% block javascripts %}{% endblock %}

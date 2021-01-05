@@ -3,6 +3,16 @@
 @tailwind utilities;
 @tailwind screens;
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  @apply bg-gray-100;
+}
+
 .main-container {
   @apply max-w-screen-lg mx-auto;
 }
