@@ -1,37 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Partagez des photos avec le monde entier{% endblock %}
+{% set isAuthenticated = is_granted('IS_AUTHENTICATED_FULLY') %}
 
+{% block title %}{{ isAuthenticated ? 'Feed' : 'Partagez des photos avec le monde entier' }}{% endblock %}
+    
 {% block body %}
-    <div class="main-container mt-20">
-        <div class="bg-white rounded-lg shadow">
-            <header class="p-5 text-center shadow-sm">
-                <h1 class="font-bold text-5xl">Picsy.</h1>
-                <h2 class="text-xl mt-5">Partagez des photos avec le monde entier</h2>
-            </header>
+    {% if isAuthenticated %}
+        <p>Feed!</p>
+    {% else %}
+        <div class="main-container mt-20">
+            <div class="bg-white rounded-lg shadow">
+                <header class="p-5 text-center shadow-sm">
+                    <h1 class="font-bold text-5xl">Picsy.</h1>
+                    <h2 class="text-xl mt-5">Partagez des photos avec le monde entier</h2>
+                </header>
 
-            <div class="grid grid-cols-2">
-                <div class="p-5">
-                    <h2 class="font-bold text-3xl mb-2">Connexion</h2>
-                    <form action="#" method="POST">
-                        <div class="flex flex-col mb-3">
-                            <label for="username" class="text-sm mb-1 font-medium">Nom d'utilisateur</label>
-                            <input type="text" name="username" id="username" placeholder="Nom d'utilisateur" class="py-2 px-3 border shadow-sm rounded-sm focus:outline-none" required />
-                        </div>
-                        <div class="flex flex-col mb-3">
-                            <label for="password" class="text-sm mb-1 font-medium">Mot de passe</label>
-                            <input type="password" name="password" id="password" placeholder="Mot de passe" class="py-2 px-3 border shadow-sm rounded-sm focus:outline-none" required />
-                        </div>
-                        <button type="submit" class="bg-blue-400 text-white w-full px-3 font-medium shadow py-2 rounded-md hover:bg-blue-500">Se connecter</button>
-                    </form>
-                    <p class="font-medium text-sm mt-5">Pas encore de compte ? <a href="#" class="text-blue-400">Inscris-toi</a></p>
+                <div class="grid grid-cols-2">
+                    <div class="p-5">
+                        <h2 class="font-bold text-3xl mb-2">Connexion</h2>
+                        <form action="#" method="POST">
+                            <div class="flex flex-col mb-3">
+                                <label for="username" class="text-sm mb-1 font-medium">Nom d'utilisateur</label>
+                                <input type="text" name="username" id="username" placeholder="Nom d'utilisateur" class="py-2 px-3 border shadow-sm rounded-sm focus:outline-none" required />
+                            </div>
+                            <div class="flex flex-col mb-3">
+                                <label for="password" class="text-sm mb-1 font-medium">Mot de passe</label>
+                                <input type="password" name="password" id="password" placeholder="Mot de passe" class="py-2 px-3 border shadow-sm rounded-sm focus:outline-none" required />
+                            </div>
+                            <button type="submit" class="bg-blue-400 text-white w-full px-3 font-medium shadow py-2 rounded-md hover:bg-blue-500">Se connecter</button>
+                        </form>
+                        <p class="font-medium text-sm mt-5">Pas encore de compte ? <a href="#" class="text-blue-400">Inscris-toi</a></p>
+                    </div>
+                    <div class="bg-center bg-no-repeat bg-cover rounded-br-lg" style="background-image: url('/assets/images/photos/beach.jpg');"></div>
                 </div>
-                <div class="bg-center bg-no-repeat bg-cover rounded-br-lg" style="background-image: url('/assets/images/photos/beach.jpg');"></div>
             </div>
         </div>
-    </div>
 
-    <footer>
-        <p class="mt-5 text-xs text-gray-400 text-center">&copy; 2021 &bull; Picsy</p>
-    </footer>
+        <footer>
+            <p class="mt-5 text-xs text-gray-400 text-center">&copy; 2021 &bull; Picsy</p>
+        </footer>
+    {% endif %}
 {% endblock %}
