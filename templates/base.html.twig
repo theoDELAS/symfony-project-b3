@@ -9,13 +9,13 @@
     </head>
 
     <body>
-        {% if app.request.get('_route') != 'home' %}
+        {% if app.request.get('_route') == 'home' and is_granted('IS_AUTHENTICATED_FULLY') %}
             {% include "includes/header.html.twig" %}
         {% endif %}
         <main>
             {% block body %}{% endblock %}
         </main>
-        {% if app.request.get('_route') != 'home' %}
+        {% if app.request.get('_route') == 'home' and is_granted('IS_AUTHENTICATED_FULLY') %}
             {% include "includes/footer.html.twig" %}
         {% endif %}
 
