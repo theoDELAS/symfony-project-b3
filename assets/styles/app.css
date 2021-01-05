@@ -4,5 +4,5 @@
 @tailwind screens;
 
 .main-container {
-  @apply 2xl:container 2xl:mx-auto lg:px-10 px-5;
+  @apply max-w-screen-lg mx-auto;
 }
