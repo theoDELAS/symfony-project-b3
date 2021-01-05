@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;
+
+.main-container {
+  @apply 2xl:container 2xl:mx-auto lg:px-10 px-5;
+}
