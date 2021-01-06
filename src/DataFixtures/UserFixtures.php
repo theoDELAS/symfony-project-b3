@@ -29,7 +29,7 @@ class UserFixtures extends Fixture
             $user->setEmail('toto@mail.com')
                  ->setFirstName($faker->firstName)
                  ->setLastName($faker->lastName)
-                 ->setBirthday($faker->date)
+                 ->setBirthday($faker->dateTime)
                  ->setEmail($faker->email)
                  ->setUsername($faker->userName)
                  ->setPassword($password);
