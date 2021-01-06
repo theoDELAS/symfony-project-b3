@@ -61,10 +61,16 @@ class Post
      */
     private $likes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=CommentLike::class, mappedBy="post", orphanRemoval=true)
+     */
+    private $commentLikes;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->commentLikes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -198,6 +204,36 @@ class Post
             // set the owning side to null (unless already changed)
             if ($like->getPost() === $this) {
                 $like->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommentLike[]
+     */
+    public function getCommentLikes(): Collection
+    {
+        return $this->commentLikes;
+    }
+
+    public function addCommentLike(CommentLike $commentLike): self
+    {
+        if (!$this->commentLikes->contains($commentLike)) {
+            $this->commentLikes[] = $commentLike;
+            $commentLike->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentLike(CommentLike $commentLike): self
+    {
+        if ($this->commentLikes->removeElement($commentLike)) {
+            // set the owning side to null (unless already changed)
+            if ($commentLike->getPost() === $this) {
+                $commentLike->setPost(null);
             }
         }
 

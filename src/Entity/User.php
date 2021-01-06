@@ -95,11 +95,17 @@ class User implements UserInterface
      */
     private $likes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=CommentLike::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $commentLikes;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->commentLikes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -367,6 +373,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($like->getUser() === $this) {
                 $like->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommentLike[]
+     */
+    public function getCommentLikes(): Collection
+    {
+        return $this->commentLikes;
+    }
+
+    public function addCommentLike(CommentLike $commentLike): self
+    {
+        if (!$this->commentLikes->contains($commentLike)) {
+            $this->commentLikes[] = $commentLike;
+            $commentLike->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentLike(CommentLike $commentLike): self
+    {
+        if ($this->commentLikes->removeElement($commentLike)) {
+            // set the owning side to null (unless already changed)
+            if ($commentLike->getUser() === $this) {
+                $commentLike->setUser(null);
             }
         }
 
