@@ -13,7 +13,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class CommentFixtures extends Fixture implements DependentFixtureInterface
 {
-    const MAX_COMMENT_PER_POST = 5;
+    const MAX_COMMENT_PER_POST = 3;
     const MAX_LIKE_PER_COMMENT = 3;
 
     public function load(ObjectManager $manager)

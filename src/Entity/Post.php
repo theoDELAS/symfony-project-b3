@@ -53,12 +53,12 @@ class Post
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="post", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="post", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="post", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=PostLike::class, mappedBy="post", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $likes;
 

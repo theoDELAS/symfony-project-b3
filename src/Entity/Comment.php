@@ -49,7 +49,7 @@ class Comment
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=CommentLike::class, mappedBy="comment", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=CommentLike::class, mappedBy="comment", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $likes;
 

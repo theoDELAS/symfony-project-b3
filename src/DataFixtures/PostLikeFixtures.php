@@ -11,7 +11,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class PostLikeFixtures extends Fixture implements DependentFixtureInterface
 {
-    const MAX_LIKE_PER_POST = 20;
+    const MAX_LIKE_PER_POST = 15;
 
     public function load(ObjectManager $manager)
     {
