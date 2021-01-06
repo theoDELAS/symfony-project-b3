@@ -26,15 +26,15 @@ class CommentLike
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="commentLikes")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $post;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $likedAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Comment::class, inversedBy="likes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $comment;
 
     public function getId(): ?int
     {
@@ -49,18 +49,6 @@ class CommentLike
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    public function getPost(): ?Post
-    {
-        return $this->post;
-    }
-
-    public function setPost(?Post $post): self
-    {
-        $this->post = $post;
 
         return $this;
     }
@@ -84,5 +72,17 @@ class CommentLike
     public function updatedTimestamps(): void
     {
         $this->setLikedAt(new \DateTime('now'));
+    }
+
+    public function getComment(): ?Comment
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?Comment $comment): self
+    {
+        $this->comment = $comment;
+
+        return $this;
     }
 }
