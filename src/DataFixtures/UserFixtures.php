@@ -24,15 +24,32 @@ class UserFixtures extends Fixture
         $password = $this->passwordEncoder->encodePassword(new User(), 'password');
 
         $faker = Factory::create('fr_FR');
-        for ($i = 0; $i < self::USER_COUNT; $i++) {
+        
+        // Admin User
+        $admin = new User();
+        $admin->setFirstName($faker->firstName)
+             ->setLastName($faker->lastName)
+             ->setBirthday($faker->dateTime)
+             ->setEmail('admin@admin.com')
+             ->setUsername('admin')
+             ->setPassword($password)
+             ->setRoles(['ROLE_ADMIN']);
+        
+        $this->addReference('user0', $admin);
+    
+        $manager->persist($admin);
+
+        // Basic User
+        for ($i = 1; $i < self::USER_COUNT; $i++) {
             $user = new User();
-            $user->setEmail('toto@mail.com')
-                 ->setFirstName($faker->firstName)
+            $user->setFirstName($faker->firstName)
                  ->setLastName($faker->lastName)
                  ->setBirthday($faker->dateTime)
                  ->setEmail($faker->email)
                  ->setUsername($faker->userName)
                  ->setPassword($password);
+
+            $this->addReference('user' . $i, $user);
     
             $manager->persist($user);
         }

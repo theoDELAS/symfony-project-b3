@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=CommentLikeRepository::class)
  * @ORM\Table(name="comment_likes")
+ * @ORM\HasLifecycleCallbacks()
  */
 class CommentLike
 {
@@ -74,5 +75,14 @@ class CommentLike
         $this->likedAt = $likedAt;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+    */
+    public function updatedTimestamps(): void
+    {
+        $this->setLikedAt(new \DateTime('now'));
     }
 }
