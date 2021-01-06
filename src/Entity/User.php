@@ -25,27 +25,6 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [];
-
-    /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
-     */
-    private $password;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isVerified = false;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $firstName;
@@ -54,6 +33,17 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $lastName;
+
+    /**
+    * @ORM\Column(type="string", length=180, unique=true)
+    */
+    private $email;
+
+    /**
+    * @var string The hashed password
+    * @ORM\Column(type="string")
+    */
+    private $password;
 
     /**
      * @ORM\Column(type="date")
@@ -69,6 +59,16 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $avatar;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
 
     /**
      * @ORM\Column(type="datetime")
