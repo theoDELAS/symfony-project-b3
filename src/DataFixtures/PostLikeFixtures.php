@@ -11,14 +11,15 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class PostLikeFixtures extends Fixture implements DependentFixtureInterface
 {
-    const POST_LIKE_COUNT = 500;
+    const MAX_LIKE_PER_POST = 20;
 
     public function load(ObjectManager $manager)
     {
         for ($i = 0; $i < PostFixtures::POST_COUNT; $i++) {
             $userIds = range(0, UserFixtures::USER_COUNT - 1);
             shuffle($userIds);
-            for ($j = 0; $j < random_int(0, 20); $j++) {
+            
+            for ($j = 0; $j < random_int(0, self::MAX_LIKE_PER_POST); $j++) {
                 $like = new PostLike();
                 $like->setUser($this->getReference('user' . array_pop($userIds)))
                      ->setPost($this->getReference('post' . $i));

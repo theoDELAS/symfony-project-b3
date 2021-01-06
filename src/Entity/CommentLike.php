@@ -26,15 +26,15 @@ class CommentLike
     private $user;
 
     /**
-     * @ORM\Column(type="datetime")
-     */
-    private $likedAt;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Comment::class, inversedBy="likes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $comment;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $likedAt;
 
     public function getId(): ?int
     {
