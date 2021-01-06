@@ -2,13 +2,16 @@
 
 namespace App\DataFixtures;
 
+use Faker\Factory;
 use App\Entity\User;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
 {
+    const USER_COUNT = 40;
+
     private $passwordEncoder;
 
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
@@ -18,15 +21,22 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        $user = new User();
+        $password = $this->passwordEncoder->encodePassword(new User(), 'password');
 
-        $user->setEmail('toto@mail.com');
-        $user->setPassword($this->passwordEncoder->encodePassword(
-            $user,
-            'password'
-        ));
+        $faker = Factory::create('fr_FR');
+        for ($i = 0; $i < self::USER_COUNT; $i++) {
+            $user = new User();
+            $user->setEmail('toto@mail.com')
+                 ->setFirstName($faker->firstName)
+                 ->setLastName($faker->lastName)
+                 ->setBirthday($faker->date)
+                 ->setEmail($faker->email)
+                 ->setUsername($faker->userName)
+                 ->setPassword($password);
+    
+            $manager->persist($user);
+        }
 
-        $manager->persist($user);
         $manager->flush();
     }
 }
