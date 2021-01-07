@@ -13,6 +13,7 @@
         {% if app.request.get('_route') == 'home' and app.user %}
             {% include "includes/header.html.twig" %}
         {% endif %}
+        <div id="spacer"></div>
         <main>
             {% block body %}{% endblock %}
         </main>
