@@ -14,5 +14,16 @@ body {
 }
 
 .main-container {
-  @apply max-w-screen-lg mx-auto;
+  @apply max-w-screen-lg mx-auto px-5;
+}
+
+#spacer {
+  height: 62px;
+  width: 100%;
+}
+
+@screen xl {
+  .main-container {
+    @apply px-0;
+  }
 }
