@@ -11,7 +11,7 @@ class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
-     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @IsGranted("ROLE_USER")
      */
     public function index(): Response
     {

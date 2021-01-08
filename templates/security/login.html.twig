@@ -6,31 +6,31 @@
     <div class="main-container mt-20">
         <div class="bg-white rounded-lg shadow">
             <header class="p-5 text-center shadow-sm">
-                <h1 class="font-bold text-5xl">Picsy.</h1>
+                <h1 class="font-bold text-5xl"><a href="{{ path('home') }}">Picsy.</a></h1>
                 <h2 class="text-xl mt-5">Partagez des photos avec le monde entier</h2>
             </header>
 
             <div class="grid grid-cols-2">
                 <div class="p-5">
                     <h2 class="font-bold text-3xl mb-2">Connexion</h2>
-                    <form action="/login" method="POST">
+                    <form action="{{ path('app_login') }}" method="POST">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
 
                         <div class="flex flex-col mb-3">
                             <label for="email" class="text-sm mb-1 font-medium">Adresse email</label>
-                            <input type="email" name="email" id="email" placeholder="Adresse email" class="py-2 px-3 border shadow-sm rounded-sm focus:outline-none" required />
+                            <input type="email" name="email" id="email" placeholder="Adresse email" class="form-input" required />
                         </div>
                         <div class="flex flex-col mb-3">
                             <label for="password" class="text-sm mb-1 font-medium">Mot de passe</label>
-                            <input type="password" name="password" id="password" placeholder="Mot de passe" class="py-2 px-3 border shadow-sm rounded-sm focus:outline-none" required />
+                            <input type="password" name="password" id="password" placeholder="Mot de passe" class="form-input" required />
                         </div>
                         <div class="mb-3 flex items-center text-sm">
-                            <input type="checkbox" id="remember_me" name="_remember_me" class="mr-2" />
-                            <label for="remember_me">Se souvenir de moi</label>
+                            <input type="checkbox" id="remember_me" name="_remember_me" />
+                            <label for="remember_me" class="ml-2">Se souvenir de moi</label>
                         </div>
                         <button type="submit" class="bg-blue-400 text-white w-full px-3 font-medium shadow py-2 rounded-md hover:bg-blue-500">Se connecter</button>
                     </form>
-                    <p class="font-medium text-sm mt-5">Pas encore de compte ? <a href="#" class="text-blue-400">Inscris-toi</a></p>
+                    <p class="font-medium text-sm mt-5">Pas encore de compte ? <a href="{{ path('app_register') }}" class="text-blue-400">Inscris-toi</a></p>
                 </div>
                 <div class="bg-center bg-no-repeat bg-cover rounded-br-lg" style="background-image: url('/assets/images/photos/beach.jpg');"></div>
             </div>

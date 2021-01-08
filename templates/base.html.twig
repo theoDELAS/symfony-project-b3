@@ -3,8 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        {{ encore_entry_link_tags('app') }}
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
         <title>Picsy &bull; {% block title %}{% endblock %}</title>
     </head>
 
@@ -19,7 +20,57 @@
             {% include "includes/footer.html.twig" %}
         {% endif %}
 
-        {{ encore_entry_script_tags('app') }}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+
+            {% for message in app.flashes('green') %}
+                <script src="/assets/js/notyf.js"></script>
+                <script>
+                    let message = {{ message|json_encode(constant('JSON_HEX_TAG'))|raw }}
+                    const notyf = new Notyf({
+                        duration: 3000,
+                        position: {
+                            x: 'center',
+                            y: 'top'
+                        },
+                        types: [
+                            {
+                                type: 'success',
+                                background: '#48bb78'
+                            },
+                            {
+                                type: 'error',
+                                background: '#e53e3e'
+                            }
+                        ]
+                    })
+                    notyf.success(message)
+                </script>
+            {% endfor %}
+            {% for message in app.flashes('red') %}
+                <script src="/assets/js/notyf.js"></script>
+                <script>
+                    let message = {{ message|json_encode(constant('JSON_HEX_TAG'))|raw }}
+                    const notyf = new Notyf({
+                        duration: 3000,
+                        position: {
+                            x: 'center',
+                            y: 'top'
+                        },
+                        types: [
+                            {
+                                type: 'success',
+                                background: '#48bb78'
+                            },
+                            {
+                                type: 'error',
+                                background: '#e53e3e'
+                            }
+                        ]
+                    })
+                    notyf.error(message)
+                </script>
+            {% endfor %}
+        {% endblock %}
     </body>
 </html>

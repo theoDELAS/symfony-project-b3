@@ -2,18 +2,20 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="users")
  * @ORM\HasLifecycleCallbacks()
- * @UniqueEntity(fields={"email", "username"}, message="Adresse email ou nom d'utilisateur déjà utilisé")
+ * @UniqueEntity("email", message="L'adresse email est déjà utilisée")
+ * @UniqueEntity("username", message="Le nom d'utilisateur  est déjà utilisé")
  */
 class User implements UserInterface
 {
@@ -26,32 +28,39 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez renseigner un prénom")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez renseigner un nom")
+     * 
      */
     private $lastName;
 
     /**
-    * @ORM\Column(type="string", length=180, unique=true)
-    */
+     * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(message="Vous devez renseigner une adresse email valide")
+     */
     private $email;
 
     /**
-    * @var string The hashed password
-    * @ORM\Column(type="string")
-    */
+     * @var string The hashed password
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Vous devez renseigner un mot de passe")
+     */
     private $password;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Notblank(message="Vous devez renseigner une date de naissance valide")
      */
     private $birthday;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * Assert\NotBlank(message="Vous devez renseigner un nom d'utilisateur")
      */
     private $username;
 

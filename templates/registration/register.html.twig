@@ -1,24 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Partagez des photos avec le monde entier{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datepicker') }}
+{% endblock %}
+    
 {% block body %}
-    {% for flashError in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-    {% endfor %}
+    <div class="main-container mt-20">
+        <div class="bg-white rounded-lg shadow">
+            <header class="p-5 text-center shadow-sm">
+                <h1 class="font-bold text-5xl"><a href="{{ path('home') }}">Picsy.</a></h1>
+                <h2 class="text-xl mt-5">Partagez des photos avec le monde entier</h2>
+            </header>
 
-    <div class="container">
-        <h1>Register</h1>
-
-        {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-        {{ form_end(registrationForm) }}
+            <div class="grid grid-cols-2">
+                <div class="p-5">
+                    <div class="mb-2">
+                        <h2 class="font-bold text-3xl">Inscription</h2>
+                        <small>Tous les champs sont obligatoires</small>
+                    </div>
+                    {{ form_start(registrationForm, { 'action': path('app_register') }) }}
+                        {{ form_errors(registrationForm) }}
+                        <div class="grid grid-cols-2 gap-4">
+                            {{ form_row(registrationForm.firstName) }}
+                            {{ form_row(registrationForm.lastName) }}
+                        </div>
+                        {{ form_row(registrationForm.birthday) }}
+                        {{ form_row(registrationForm.email) }}
+                        {{ form_row(registrationForm.username) }}
+                        {{ form_row(registrationForm.password) }}
+                        
+                        <p class="text-xs mb-3 text-gray-400">En vous inscrivant, vous acceptez les <a href="#" class="font-medium">conditions générales d'utilisations</a></p>
+                        
+                        <button type="submit" class="bg-blue-400 text-white w-full px-3 font-medium shadow py-2 rounded-md hover:bg-blue-500">S'inscrire</button>
+                    {{ form_end(registrationForm) }}
+                </div>
+                <div class="bg-center bg-no-repeat bg-cover rounded-br-lg" style="background-image: url('/assets/images/photos/jungle.jpg');"></div>
+            </div>
+        </div>
     </div>
 
+    <footer>
+        <p class="mt-5 text-xs text-gray-400 text-center">&copy; 2021 &bull; Picsy</p>
+    </footer>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datepicker') }}
 {% endblock %}

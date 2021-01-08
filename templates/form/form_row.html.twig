@@ -1,0 +1,15 @@
+{% block form_row %}
+    <div class="flex flex-col mb-3">
+        {{ form_label(form, null, { 'label_attr': { 'class': 'text-sm mb-1 font-medium' } }) }}
+
+        {% if form.vars.errors|length %}
+            <small class="text-xs text-red-500 mb-2">{{ form_errors(form) }}</small>
+        {% endif %}
+        
+        {% if not form.vars.valid %}
+            {{ form_widget(form, { 'attr': { 'class': "form-input border border-red-500" } }) }}
+        {% else %}
+            {{ form_widget(form, { 'attr': { 'class': 'form-input' } }) }}
+        {% endif %}
+    </div>
+{% endblock form_row %}
