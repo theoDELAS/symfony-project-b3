@@ -9,12 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
-    /**
-     * @Route("/", name="home")
-     * @IsGranted("ROLE_USER")
-     */
-    public function index(): Response
-    {
-        return $this->render('home/index.html.twig', []);
-    }
+    // /**
+    //  * @Route("/", name="home")
+    //  * @IsGranted("ROLE_USER")
+    //  */
+    // public function index(): Response
+    // {
+    //     return $this->render('home/index.html.twig', []);
+    // }
 }

@@ -11,7 +11,7 @@
     <div class="main-container">
         <div class="bg-white rounded-lg shadow">
             <header class="p-5 text-center shadow-sm">
-                <h1 class="font-bold text-5xl"><a href="{{ path('home') }}">Picsy.</a></h1>
+                <h1 class="font-bold text-5xl"><a href="{{ path('post') }}">Picsy.</a></h1>
                 <h2 class="text-xl mt-5">Partagez des photos avec le monde entier</h2>
             </header>
 
@@ -35,6 +35,7 @@
                         
                         <button type="submit" class="bg-blue-400 text-white w-full px-3 font-medium shadow py-2 rounded-md hover:bg-blue-500">S'inscrire</button>
                     {{ form_end(registrationForm) }}
+                    <p class="font-medium text-sm mt-3">Déjà un compte ? <a href="{{ path('app_login') }}" class="text-blue-400">Se connecter</a></p>
                 </div>
                 <div class="bg-center bg-no-repeat bg-cover rounded-br-lg" style="background-image: url('/assets/images/photos/jungle.jpg');"></div>
             </div>
