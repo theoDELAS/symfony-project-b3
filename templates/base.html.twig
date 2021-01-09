@@ -10,14 +10,14 @@
     </head>
 
     <body>
-        {% if app.request.get('_route') == 'home' and app.user %}
+        {% if app.user %}
             {% include "includes/header.html.twig" %}
         {% endif %}
         <div id="spacer"></div>
         <main>
             {% block body %}{% endblock %}
         </main>
-        {% if app.request.get('_route') == 'home' and app.user %}
+        {% if app.user %}
             {% include "includes/footer.html.twig" %}
         {% endif %}
 
