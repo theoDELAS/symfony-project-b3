@@ -39,7 +39,7 @@ class RegistrationController extends AbstractController
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
-                    $form->get('password')->getData()
+                    $form->get('plainPassword')->getData()
                 )
             );
 
@@ -65,10 +65,6 @@ class RegistrationController extends AbstractController
                 $authenticator,
                 'main' // firewall name in security.yaml
             );
-        }
-
-        if ($form->isSubmitted() && !$form->isValid()) {
-            $this->addFlash('red', 'Les donées saisies sont incorrectes');
         }
 
         return $this->render('registration/register.html.twig', [

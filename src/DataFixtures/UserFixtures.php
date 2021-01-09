@@ -31,7 +31,7 @@ class UserFixtures extends Fixture
              ->setLastName($faker->lastName)
              ->setBirthday($faker->dateTime)
              ->setEmail('admin@admin.com')
-             ->setUsername('admin')
+             ->setName('admin')
              ->setPassword($password)
              ->setRoles(['ROLE_ADMIN']);
         
@@ -46,7 +46,7 @@ class UserFixtures extends Fixture
                  ->setLastName($faker->lastName)
                  ->setBirthday($faker->dateTime)
                  ->setEmail($faker->email)
-                 ->setUsername($faker->userName)
+                 ->setName($faker->userName)
                  ->setPassword($password);
 
             $this->addReference('user' . $i, $user);

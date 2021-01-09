@@ -47,9 +47,10 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-input',
                     'placeholder' => 'Date de naissance'
-                ]
+                ],
+                'invalid_message' => 'Vous devez renseigner une date de naissance valide'
             ])
-            ->add('username', TextType::class, [
+            ->add('name', TextType::class, [
                 'label' => 'Nom d\'utilisateur',
                 'attr' => [
                     'class' => 'form-input',
@@ -63,7 +64,8 @@ class RegistrationFormType extends AbstractType
                     'placeholder' => 'Adresse email'
                 ]
             ])
-            ->add('password', RepeatedType::class, [
+            ->add('plainPassword', RepeatedType::class, [
+                'mapped' => false,
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passes ne correspondent pas',
                 'options' => [

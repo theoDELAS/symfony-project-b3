@@ -15,7 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="users")
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity("email", message="L'adresse email est déjà utilisée")
- * @UniqueEntity("username", message="Le nom d'utilisateur  est déjà utilisé")
+ * @UniqueEntity("name", message="Le nom d'utilisateur  est déjà utilisé")
  */
 class User implements UserInterface
 {
@@ -48,7 +48,6 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="Vous devez renseigner un mot de passe")
      */
     private $password;
 
@@ -60,9 +59,9 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * Assert\NotBlank(message="Vous devez renseigner un nom d'utilisateur")
+     * @Assert\NotBlank(message="Vous devez renseigner un nom d'utilisateur")
      */
-    private $username;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -243,13 +242,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
     public function getAvatar(): ?string
     {
         return $this->avatar;
@@ -414,6 +406,18 @@ class User implements UserInterface
                 $commentLike->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

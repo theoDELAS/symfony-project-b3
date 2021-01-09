@@ -22,15 +22,14 @@
                         <small>Tous les champs sont obligatoires</small>
                     </div>
                     {{ form_start(registrationForm, { 'action': path('app_register') }) }}
-                        {{ form_errors(registrationForm) }}
                         <div class="grid grid-cols-2 gap-4">
                             {{ form_row(registrationForm.firstName) }}
                             {{ form_row(registrationForm.lastName) }}
                         </div>
                         {{ form_row(registrationForm.birthday) }}
                         {{ form_row(registrationForm.email) }}
-                        {{ form_row(registrationForm.username) }}
-                        {{ form_row(registrationForm.password) }}
+                        {{ form_row(registrationForm.name) }}
+                        {{ form_row(registrationForm.plainPassword) }}
                         
                         <p class="text-xs mb-3 text-gray-400">En vous inscrivant, vous acceptez les <a href="#" class="font-medium">conditions générales d'utilisations</a></p>
                         
