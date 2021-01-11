@@ -36,7 +36,6 @@ body {
   @apply object-cover w-full;
   max-height: 600px;
 }
-
 .picture-post {
   @apply object-cover w-full;
   height: 300px;
