@@ -55,9 +55,7 @@
                 </div>
             {% else %}
                 {% for post in user.posts %}
-                    <div class="col-span-1">
-                        <img class="picture-post" src="{{ post.picture }}" alt="">
-                    </div>
+                    <img class="picture-post" src="{{ post.picture }}" alt="">
                 {% endfor %}
             {% endif %}
         </div>
@@ -69,9 +67,7 @@
                 </div>
             {% else %}
                 {% for like in user.likes %}
-                    <div class="col-span-1">
-                        <img class="picture-post" src="{{ like.post.picture }}" alt="">
-                    </div>
+                    <img class="picture-post" src="{{ like.post.picture }}" alt="">
                 {% endfor %}
             {% endif %}
         </div>

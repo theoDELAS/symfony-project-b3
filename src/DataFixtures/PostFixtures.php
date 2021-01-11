@@ -20,7 +20,7 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
         $faker = Factory::create('fr_FR');
         for ($i = 0; $i < self::POST_COUNT; $i++) {
             $post = new Post();
-            $post->setPicture('http://placehold.it/600x600')
+            $post->setPicture('https://picsum.photos/60' . random_int(0, 9) . '/60' . random_int(0, 9))
                  ->setDescription(random_int(0, 1) === 0 ? $faker->sentence : null)
                  ->setLocation(random_int(0, 1) === 0 ? $faker->city : null)
                  ->setUser($this->getReference('user' . random_int(0, UserFixtures::USER_COUNT - 1)));
