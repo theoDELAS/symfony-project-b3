@@ -55,7 +55,7 @@
                 </div>
             {% else %}
                 {% for post in user.posts %}
-                    <img class="picture-post" src="{{ post.picture }}" alt="">
+                    <img class="picture-post" src="{{ asset('uploads/posts/' ~ post.picture) }}" alt="">
                 {% endfor %}
             {% endif %}
         </div>
@@ -67,7 +67,7 @@
                 </div>
             {% else %}
                 {% for like in user.likes %}
-                    <img class="picture-post" src="{{ like.post.picture }}" alt="">
+                    <img class="picture-post" src="{{ asset('uploads/posts/' ~ like.post.picture) }}" alt="">
                 {% endfor %}
             {% endif %}
         </div>

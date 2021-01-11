@@ -2,18 +2,20 @@
     <div class="flex flex-col mb-3">
         {{ form_label(form, null, { 'label_attr': { 'class': 'text-sm mb-1 font-medium' } }) }}
 
-        {# {% if form.vars.attr %}
-            {{ dump(form.vars.attr) }}
-        {% endif %} #}
-
         {% if form.vars.errors|length %}
             <small class="text-xs text-red-500 mb-2">{{ form_errors(form) }}</small>
         {% endif %}
-        
+
+        {% set classes = 'form-input' %}
+        {% for key, value in form.vars.attr %}
+            {% if key == 'class' %}
+                {% set classes = classes ~ " #{value}" %}
+            {% endif %}
+        {% endfor %}
         {% if not form.vars.valid %}
-            {{ form_widget(form, { 'attr': { 'class': "form-input border border-red-500" } }) }}
-        {% else %}
-            {{ form_widget(form, { 'attr': { 'class': 'form-input' } }) }}
+            {% set classes = classes ~ " border border-red-500" %}
         {% endif %}
+
+        {{ form_widget(form, { 'attr': { 'class': classes } }) }}
     </div>
 {% endblock form_row %}
