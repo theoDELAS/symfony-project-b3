@@ -18,7 +18,7 @@ body {
 }
 
 #spacer {
-  height: 62px;
+  height: 58px;
   width: 100%;
 }
 
@@ -36,6 +36,7 @@ body {
   @apply object-cover w-full;
   max-height: 600px;
 }
+
 .picture-post {
   @apply object-cover w-full;
   height: 300px;
