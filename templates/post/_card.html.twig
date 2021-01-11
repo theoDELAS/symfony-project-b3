@@ -1,6 +1,6 @@
-<div class="border shadow-sm mb-5">
+<div class="border mb-5 text-sm">
     <div class="bg-white p-3">
-        <div class="flex items-center text-xs">
+        <div class="flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-8 mr-2">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -12,5 +12,39 @@
             </div>
         </div>
     </div>
-    <img src="{{ post.picture }}" alt="" class="w-full h-auto">
+
+    <img src="{{ post.picture }}" alt="Photo par {{ post.user.fullName }}" class="post" />
+
+    <div class="bg-white">
+        <p class="font-medium px-3 pt-3">
+            {{ post.likes|length }} likes
+            {% if post.comments|length > 0 %}
+            &bull;
+                {% if post.comments|length > 1 %}
+                    {{ post.comments|length }} commentaires
+                {% else %}
+                    {{ post.comments|length }} commentaire
+                {% endif %}
+            {% endif %}
+        </p>
+        {% if post.description %}
+        <div class="flex px-3">
+            <p class="font-medium mr-2">{{ post.user.name }}</p>
+            <p>{{ post.description }}</p>
+        </div>
+        {% endif %}
+        {% if post.comments|length > 0 %}
+            <hr class="my-2">
+            {% for comment in post.comments %}
+                <div class="flex px-3">
+                    <p class="font-medium mr-2">{{ comment.user.name }}</p>
+                    <p>{{ comment.comment }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form action="#" class="border-t mt-2 py-4 px-3 flex items-center justify-between">
+            <input type="text" placeholder="Votre commentaire">
+            <button type="submit" class="font-bold text-blue-400">Envoyer</button>
+        </form>
+    </div>
 </div>

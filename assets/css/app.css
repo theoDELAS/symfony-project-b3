@@ -31,3 +31,8 @@ body {
 .form-input {
   @apply py-2 px-3 border shadow-sm rounded placeholder-gray-500 focus:outline-none focus:border-black;
 }
+
+.post {
+  @apply object-cover w-full;
+  max-height: 600px;
+}
