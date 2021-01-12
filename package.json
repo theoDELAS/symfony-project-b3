@@ -21,6 +21,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "alpinejs": "^2.8.0"
+        "alpinejs": "^2.8.0",
+        "axios": "^0.21.1"
     }
 }

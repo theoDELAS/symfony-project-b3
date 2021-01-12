@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Entity\PostLike;
 use App\Service\FileUploader;
 use App\Repository\PostRepository;
+use App\Repository\PostLikeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,8 +24,53 @@ class PostController extends AbstractController
     public function index(PostRepository $postRepository): Response
     {
         return $this->render('post/index.html.twig', [
-            'posts' => $postRepository->findAll(),
+            'posts' => $postRepository->findBy([], ['createdAt' => 'DESC'], 20)
         ]);
+    }
+
+    /**
+     * Like or unlike a post user
+     *
+     * @Route("/post/{id}/like", name="post_like")
+     * @IsGranted("ROLE_USER")
+     * 
+     * @param Post $post
+     * @param PostLikeRepository $postLikeRepository
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    public function like(Post $post, PostLikeRepository $postLikeRepository, EntityManagerInterface $manager): Response {
+        $user = $this->getUser();
+
+        if (!$user) {
+            return $this->json(['code' => 403, 'message' => 'Unauthorized'], 403);
+        }
+
+        if ($post->isLikedByUser($user)) {
+            $like = $postLikeRepository->findOneBy(['post' => $post, 'user' => $user]);
+
+            $manager->remove($like);
+            $manager->flush();
+
+            return $this->json([
+                'code' => 200,
+                'message' => 'Successfully unliked',
+                'likes' => $postLikeRepository->count(['post' => $post])
+            ], 200);
+        }
+
+        $like = new PostLike();
+        $like->setPost($post)
+             ->setUser($user);
+
+        $manager->persist($like);
+        $manager->flush();
+
+        return $this->json([
+            'code' => 200,
+            'message' => 'Successfully liked',
+            'likes' => $postLikeRepository->count(['post' => $post])
+        ], 200);
     }
 
     /**
