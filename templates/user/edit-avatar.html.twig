@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    {{ parent() }} | Modifier mon avatar
+{% endblock %}
+
+{% block body %}
+  <div class="main-container py-5">
+        <div class="bg-white rounded-lg shadow">
+            <div class="grid grid-cols-2">
+                <div class="p-5">
+                    <div class="mb-2">
+                        <h2 class="font-bold text-3xl">Modification de l'avatar</h2>
+                        <small>Tous les champs sont obligatoires</small>
+                    </div>
+                    {{ form_start(form, { 'action': path('avatar_edit') }) }}
+                        {{ form_row(form.picture) }}
+                        <button type="submit" class="bg-blue-400 text-white w-full px-3 font-medium shadow py-2 rounded-md hover:bg-blue-500">Modifier</button>
+                    {{ form_end(form) }}
+                </div>
+                <div class="bg-center bg-no-repeat bg-contain rounded-br-lg" style="background-image: url('/assets/images/photos/undraw_profile_pic.png');"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
