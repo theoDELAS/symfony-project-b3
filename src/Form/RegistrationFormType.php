@@ -45,7 +45,7 @@ class RegistrationFormType extends AbstractType
             ->add('birthday', TextType::class, [
                 'label' => 'Date de naissance',
                 'attr' => [
-                    'class' => 'form-input',
+                    'class' => 'form-input date-field',
                     'placeholder' => 'Date de naissance'
                 ],
                 'invalid_message' => 'Vous devez renseigner une date de naissance valide'
