@@ -12,6 +12,7 @@ use App\Repository\PostRepository;
 use App\Repository\CommentRepository;
 use App\Repository\PostLikeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,14 +25,16 @@ class PostController extends AbstractController
      * @Route("/", name="post")
      * @IsGranted("ROLE_USER")
      */
-    public function index(PostRepository $postRepository): Response
+    public function index(PostRepository $postRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
+        $posts = $paginator->paginate(
+            $postRepository->findBy([], ['createdAt' => 'DESC']),
+            $request->query->getInt('page', 1),
+            20
+        );
         
         return $this->render('post/index.html.twig', [
-            'posts' => $postRepository->findBy([], ['createdAt' => 'DESC'], 20),
-            'form' => $form->createView()
+            'posts' => $posts
         ]);
     }
 

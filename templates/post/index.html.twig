@@ -9,6 +9,10 @@
                 {% for post in posts %}
                     {% include "post/_card.html.twig" %}
                 {% endfor %}
+
+                <div class="flex justify-center">
+                    {{ knp_pagination_render(posts) }}
+                </div>
             </div>
             <div>
                 <div class="mb-3">
