@@ -36,6 +36,20 @@ class PostController extends AbstractController
     }
 
     /**
+     * Show a specific post
+     *
+     * @Route("/post/{id}", name="post_show")
+     * 
+     * @param Post $post
+     * @return Response
+     */
+    public function show(Post $post): Response {
+        return $this->render('post/show.html.twig', [
+            'post' => $post
+        ]);
+    }
+
+    /**
      * Like or unlike a post user
      *
      * @Route("/post/{id}/like", name="post_like")
@@ -104,7 +118,7 @@ class PostController extends AbstractController
                 if (!$this->isCsrfTokenValid('form-comment', $data['token']) || !$data['comment']) {
                     return $this->json([
                         'code' => 400,
-                        'message' => 'Bad requestssss',
+                        'message' => 'Bad requests',
                         'comments' => $commentRepository->count(['post' => $post])
                     ], 400);
                 }

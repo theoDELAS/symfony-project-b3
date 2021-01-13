@@ -13,9 +13,13 @@
         </div>
     </div>
 
-    <a href="{{ path('post_show', { 'id': post.id }) }}">
+    {% if app.request.get('_route') == 'post_show' %}
         <img src="{{ post.picture }}" alt="Photo par {{ post.user.fullName }}" class="post" />
-    </a>
+    {% else %}
+        <a href="{{ path('post_show', { 'id': post.id }) }}">
+            <img src="{{ post.picture }}" alt="Photo par {{ post.user.fullName }}" class="post" />
+        </a>
+    {% endif %}
 
     <div class="bg-white">
         <div class="flex items-center px-3 pt-3">
@@ -47,12 +51,21 @@
         <hr class="comment-separator my-2{{ post.comments|length < 1 ?  ' hidden' : '' }}">
         <div class="comments-list">
             {% if post.comments|length > 0 %}
-                {% for comment in post.comments|slice(0, 5) %}
-                    <div class="flex px-3">
-                        <p class="font-medium mr-2">{{ comment.user.name }}</p>
-                        <p>{{ comment.comment }}</p>
-                    </div>
-                {% endfor %}
+                {% if app.request.get('_route') == 'post_show' %}
+                    {% for comment in post.comments %}
+                        <div class="flex px-3">
+                            <p class="font-medium mr-2">{{ comment.user.name }}</p>
+                            <p>{{ comment.comment }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% for comment in post.comments|slice(0, 5) %}
+                        <div class="flex px-3">
+                            <p class="font-medium mr-2">{{ comment.user.name }}</p>
+                            <p>{{ comment.comment }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
             {% endif %}
         </div>
 

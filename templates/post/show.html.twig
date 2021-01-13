@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Publication{% endblock %}
+    
+{% block body %}
+    <div class="main-container my-5">
+        <div class="grid grid-cols-3 gap-6">
+            <div class="col-span-2">
+                {% include "post/_card.html.twig" %}
+            </div>
+            <div>
+                <div class="mb-3">
+                    <a href="{{ path('post_create') }}" class="flex items-center justify-center font-medium text-lg text-white py-4 px-5 rounded-md bg-pink-600 hover:bg-pink-700 focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 mr-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                        Poster une photo
+                    </a>
+                </div>
+                <div>
+                    <h2 class="font-medium text-gray-400 mb-3">Suggestions pour vous</h2>
+                    <div class="text-sm">
+                        <div class="mb-3">
+                            <a href="#">
+                                <div class="bg-white rounded-md border p-2 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-16 mr-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <p class="font-bold">username</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="mb-3">
+                            <a href="#">
+                                <div class="bg-white rounded-md border p-2 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-16 mr-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <p class="font-bold">username</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="mb-3">
+                            <a href="#">
+                                <div class="bg-white rounded-md border p-2 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-16 mr-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <p class="font-bold">username</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="mb-3">
+                            <a href="#">
+                                <div class="bg-white rounded-md border p-2 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-16 mr-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <p class="font-bold">username</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('like') }}
+    {{ encore_entry_script_tags('comment') }}
+
+    <script>
+        const autoGrow = textarea => {
+            textarea.style.height = '5px';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        }
+    </script>
+{% endblock %}
