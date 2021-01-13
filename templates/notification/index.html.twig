@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block body %}
+    <div class="main-container py-5">
+        <div class="mb-3">
+            <h1 class="font-bold text-3xl">Vos notifications</h1>
+            <p>Consultez vos 10 derniers likes & commentaires</p>
+        </div>
+
+        <div class="bg-white rounded-md shadow border">
+            <div class="grid grid-cols-2">
+                <div class="border-r">
+                    <h2 class="font-bold text-2xl p-3 border-b">Likes</h2>
+                    {% for like in likes %}
+                        <p class="text-sm py-2 border-t px-3 bg-gray-50{{ loop.last ? ' rounded-bl-md' : '' }}"><a href="#" class="font-medium text-pink-600">@{{ like.user.name }}</a> a liké votre <a href="#" class="font-medium">publication</a></p>
+                    {% endfor %}
+                </div>
+                <div class="border-l">
+                    <h2 class="font-bold text-2xl p-3 border-b">Commentaires</h2>
+                    {% for comment in comments %}
+                        <p class="text-sm py-2 border-t px-3 bg-gray-50{{ loop.last ? ' rounded-br-md' : '' }}"><a href="#" class="font-medium text-blue-500">@{{ comment.user.name }}</a> a commenté votre <a href="#" class="font-medium">publication</a></p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
