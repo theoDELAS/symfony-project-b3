@@ -13,7 +13,7 @@ const addCommentInList = (list, username, comment) => {
 
   commentBloc.appendChild(usernameParagraph)
   commentBloc.appendChild(commentParagraph)
-  list.appendChild(commentBloc)
+  list.prepend(commentBloc)
 }
 
 document.querySelectorAll('.post-card').forEach(card => {
