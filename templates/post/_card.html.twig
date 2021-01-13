@@ -1,4 +1,4 @@
-<div class="border mb-5 text-sm">
+<div class="border mb-5 text-sm post-card">
     <div class="bg-white p-3">
         <div class="flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-8 mr-2">
@@ -30,8 +30,10 @@
                     {{ post.likes|length > 1 ? 'likes' : 'like' }}
                 </span>
                 &bull;
-                {{ post.comments|length }}
-                {{ post.comments|length > 1 ? 'commentaires' : 'commentaire' }}
+                <span class="comment-likes">
+                    {{ post.comments|length }}
+                    {{ post.comments|length > 1 ? 'commentaires' : 'commentaire' }}
+                </span>
             </p>
         </div>
         {% if post.description %}
@@ -40,17 +42,23 @@
             <p>{{ post.description }}</p>
         </div>
         {% endif %}
-        {% if post.comments|length > 0 %}
-            <hr class="my-2">
-            {% for comment in post.comments %}
-                <div class="flex px-3">
-                    <p class="font-medium mr-2">{{ comment.user.name }}</p>
-                    <p>{{ comment.comment }}</p>
-                </div>
-            {% endfor %}
-        {% endif %}
-        <form action="#" class="border-t mt-2 py-4 px-3 flex items-center justify-between">
-            <input type="text" placeholder="Votre commentaire">
+        <hr class="comment-separator my-2{{ post.comments|length < 1 ?  ' hidden' : '' }}">
+        <div class="comments-list">
+            {% if post.comments|length > 0 %}
+                {% for comment in post.comments %}
+                    <div class="flex px-3">
+                        <p class="font-medium mr-2">{{ comment.user.name }}</p>
+                        <p>{{ comment.comment }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <form action="{{ path('post_comment', { 'id': post.id }) }}" method="POST" class="form-comment border-t mt-2 py-4 px-3 flex items-center justify-between">
+            <textarea placeholder="Votre commentaire" class="resize-none focus:outline-none w-full h-5 max-h-10 overflow-hidden mr-5" name="comment" oninput="autoGrow(this)" required></textarea>
+            <input type="hidden" name="token" value="{{ csrf_token('form-comment') }}" required />
+            <input type="hidden" name="username" value="{{ app.user.name }}" />
+            <input type="hidden" name="post-id" value="{{ post.id }}" />
             <button type="submit" class="font-bold text-blue-400">Envoyer</button>
         </form>
     </div>

@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Entity\Comment;
 use App\Entity\PostLike;
+use App\Form\CommentType;
 use App\Service\FileUploader;
 use App\Repository\PostRepository;
+use App\Repository\CommentRepository;
 use App\Repository\PostLikeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,8 +26,12 @@ class PostController extends AbstractController
      */
     public function index(PostRepository $postRepository): Response
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        
         return $this->render('post/index.html.twig', [
-            'posts' => $postRepository->findBy([], ['createdAt' => 'DESC'], 20)
+            'posts' => $postRepository->findBy([], ['createdAt' => 'DESC'], 20),
+            'form' => $form->createView()
         ]);
     }
 
@@ -71,6 +78,54 @@ class PostController extends AbstractController
             'message' => 'Successfully liked',
             'likes' => $postLikeRepository->count(['post' => $post])
         ], 200);
+    }
+
+    /**
+     * Add a comment to a post
+     * 
+     * @Route("/post/{id}/comment", name="post_comment")
+     *
+     * @param Post $post
+     * @param PostRepository $postRepository
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    public function comment(Post $post, CommentRepository $commentRepository, EntityManagerInterface $manager, Request $request) {
+        $user = $this->getUser();
+
+        if (!$user) {
+            return $this->json(['code' => 403, 'message' => 'Unauthorized'], 403);
+        }
+
+        if ($request->isXmlHttpRequest()) {
+            if ($content = $request->getContent()) {
+                $data = json_decode($content, true);
+
+                if (!$this->isCsrfTokenValid('form-comment', $data['token']) || !$data['comment']) {
+                    return $this->json([
+                        'code' => 400,
+                        'message' => 'Bad requestssss',
+                        'comments' => $commentRepository->count(['post' => $post])
+                    ], 400);
+                }
+
+                $comment = new Comment();
+                $comment->setUser($user)
+                        ->setComment($data['comment'])
+                        ->setPost($post);
+
+                $manager->persist($comment);
+                $manager->flush();
+
+                return $this->json([
+                    'code' => 200,
+                    'message' => 'Successfully commented',
+                    'comments' => $commentRepository->count(['post' => $post])
+                ], 200);
+            }
+        }
+
+        return $this->json(['code' => 400, 'message' => 'Bad request'], 400);
     }
 
     /**

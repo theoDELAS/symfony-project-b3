@@ -6,10 +6,10 @@
             <small class="text-xs text-red-500 mb-2">{{ form_errors(form) }}</small>
         {% endif %}
 
-        {% set classes = 'form-input' %}
+        {% set classes = '' %}
         {% for key, value in form.vars.attr %}
             {% if key == 'class' %}
-                {% set classes = classes ~ " #{value}" %}
+                {% set classes = classes ~ "#{classes|length > 1 ? ' ' : ''}#{value}" %}
             {% endif %}
         {% endfor %}
         {% if not form.vars.valid %}
