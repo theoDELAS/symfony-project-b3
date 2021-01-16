@@ -16,7 +16,7 @@
                     {% for like in likes %}
                         <p class="text-sm py-2 border-t px-3 bg-gray-50{{ loop.last ? ' rounded-bl-md' : '' }}"><a href="#" class="font-medium text-pink-600">@{{ like.user.name }}</a> a liké votre <a href="#" class="font-medium">publication</a></p>
                     {% else %}
-                        <p class="text-sm">Aucune notification pour le moment</p>
+                        <p class="text-sm px-3 py-2">Aucune notification pour le moment</p>
                     {% endfor %}
                 </div>
                 <div class="border-l">
@@ -24,7 +24,7 @@
                     {% for comment in comments %}
                         <p class="text-sm py-2 border-t px-3 bg-gray-50{{ loop.last ? ' rounded-br-md' : '' }}"><a href="#" class="font-medium text-blue-500">@{{ comment.user.name }}</a> a commenté votre <a href="#" class="font-medium">publication</a></p>
                     {% else %}
-                        <p class="text-sm">Aucune notification pour le moment</p>
+                        <p class="text-sm px-3 py-2">Aucune notification pour le moment</p>
                     {% endfor %}
                 </div>
             </div>
