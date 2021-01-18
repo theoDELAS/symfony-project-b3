@@ -68,7 +68,7 @@
             {% else %}
             <div class="grid grid-cols-3 gap-6">
                 {% for post in user.posts %}
-                    <img class="picture-post" src="{{ asset('uploads/posts/' ~ post.picture) }}" alt="">
+                    <img class="picture-post" src="{{ post.picture }}" alt="">
                 {% endfor %}
             </div>
             {% endif %}
@@ -82,7 +82,7 @@
             {% else %}
                 <div class="grid grid-cols-3 gap-6">
                     {% for like in user.likes %}
-                        <img class="picture-post" src="{{ asset('uploads/' ~ like.post.picture) }}" alt="">
+                        <img class="picture-post" src="{{ like.post.picture }}" alt="">
                     {% endfor %}
                 </div>
             {% endif %}
