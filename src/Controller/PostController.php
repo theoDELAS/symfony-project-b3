@@ -6,15 +6,9 @@ use App\Entity\Post;
 use App\Form\PostType;
 use App\Entity\Comment;
 use App\Entity\PostLike;
-<<<<<<< HEAD
 use App\Form\CommentType;
-use App\Service\FileUploader;
-use App\Repository\PostRepository;
 use App\Repository\CommentRepository;
-use App\Repository\PostLikeRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
-=======
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Key;
 use App\Service\FileUploader;
@@ -23,7 +17,6 @@ use Lcobucci\JWT\Signer\Hmac\Sha256;
 use App\Repository\PostLikeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Cookie;
->>>>>>> ee823a2 (:sparkles: Add real time chat (:construction: : send/receive from an existing conversation))
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,23 +36,6 @@ class PostController extends AbstractController
             $request->query->getInt('page', 1),
             20
         );
-        
-        return $this->render('post/index.html.twig', [
-            'posts' => $posts
-        ]);
-    }
-
-    /**
-     * Show a specific post
-     *
-     * @Route("/post/{id}", name="post_show")
-     * 
-     * @param Post $post
-     * @return Response
-     */
-    public function show(Post $post): Response {
-        return $this->render('post/show.html.twig', [
-            'post' => $post
 
         $username = $this->getUser()->getName();
         $token = (new Builder())
@@ -67,11 +43,10 @@ class PostController extends AbstractController
             ->getToken(
                 new Sha256(),
                 new Key($this->getParameter('mercure_secret_key'))
-            )
-        ;
+            );
 
         $response = $this->render('post/index.html.twig', [
-            'posts' => $postRepository->findBy([], ['createdAt' => 'DESC'], 20)
+            'posts' => $posts,
         ]);
 
         $response->headers->setCookie(
@@ -88,10 +63,54 @@ class PostController extends AbstractController
                 'strict'
             )
         );
-
+        
         return $response;
+    }
 
+    /**
+     * @Route("/post/new", name="post_create")
+     * @IsGranted("ROLE_USER")
+     */
+    public function create(Request $request, FileUploader $fileUploader, EntityManagerInterface $manager) {
+        $post = new Post();
 
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $postPicture = $form->get('picture')->getData();
+            if ($postPicture) {
+                $filename = $fileUploader->upload($postPicture);
+                $post->setPicture($filename);
+            }
+            
+            $post->setUser($this->getUser());
+
+            $manager->persist($post);
+            $manager->flush();
+
+            $this->addFlash('green', 'Publication créée');
+
+            return $this->redirectToRoute('post');
+        }
+
+        return $this->render('post/create.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * Show a specific post
+     *
+     * @Route("/post/{id}", name="post_show")
+     * 
+     * @param Post $post
+     * @return Response
+     */
+    public function show(Post $post): Response {
+        return $this->render('post/show.html.twig', [
+            'post' => $post
+        ]);
     }
 
     /**
@@ -185,37 +204,5 @@ class PostController extends AbstractController
         }
 
         return $this->json(['code' => 400, 'message' => 'Bad request'], 400);
-    }
-
-    /**
-     * @Route("/post/new", name="post_create")
-     * @IsGranted("ROLE_USER")
-     */
-    public function create(Request $request, FileUploader $fileUploader, EntityManagerInterface $manager) {
-        $post = new Post();
-
-        $form = $this->createForm(PostType::class, $post);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $postPicture = $form->get('picture')->getData();
-            if ($postPicture) {
-                $filename = $fileUploader->upload($postPicture);
-                $post->setPicture($filename);
-            }
-            
-            $post->setUser($this->getUser());
-
-            $manager->persist($post);
-            $manager->flush();
-
-            $this->addFlash('green', 'Publication créée');
-
-            return $this->redirectToRoute('post');
-        }
-
-        return $this->render('post/create.html.twig', [
-            'form' => $form->createView()
-        ]);
     }
 }
