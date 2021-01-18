@@ -6,6 +6,7 @@ use App\Entity\Post;
 use App\Form\PostType;
 use App\Entity\Comment;
 use App\Entity\PostLike;
+<<<<<<< HEAD
 use App\Form\CommentType;
 use App\Service\FileUploader;
 use App\Repository\PostRepository;
@@ -13,6 +14,16 @@ use App\Repository\CommentRepository;
 use App\Repository\PostLikeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+=======
+use Lcobucci\JWT\Builder;
+use Lcobucci\JWT\Signer\Key;
+use App\Service\FileUploader;
+use App\Repository\PostRepository;
+use Lcobucci\JWT\Signer\Hmac\Sha256;
+use App\Repository\PostLikeRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Cookie;
+>>>>>>> ee823a2 (:sparkles: Add real time chat (:construction: : send/receive from an existing conversation))
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,7 +60,38 @@ class PostController extends AbstractController
     public function show(Post $post): Response {
         return $this->render('post/show.html.twig', [
             'post' => $post
+
+        $username = $this->getUser()->getName();
+        $token = (new Builder())
+            ->withClaim('mercure', ['subscribe' => [sprintf("/%s", $username)]])
+            ->getToken(
+                new Sha256(),
+                new Key($this->getParameter('mercure_secret_key'))
+            )
+        ;
+
+        $response = $this->render('post/index.html.twig', [
+            'posts' => $postRepository->findBy([], ['createdAt' => 'DESC'], 20)
         ]);
+
+        $response->headers->setCookie(
+            new Cookie(
+                'mercureAuthorization',
+                $token,
+                (new \DateTime())
+                ->add(new \DateInterval('PT2H')),
+                '/.well-known/mercure',
+                null,
+                false,
+                true,
+                false,
+                'strict'
+            )
+        );
+
+        return $response;
+
+
     }
 
     /**
